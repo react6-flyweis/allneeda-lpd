@@ -42,7 +42,9 @@ function DepartmentWorkloadChart() {
             dataKey="department"
             interval={0}
             height={80}
-            tick={{ fontSize: 12, angle: -45, textAnchor: "end" }}
+            angle={-45}
+            textAnchor="end"
+            tick={{ fontSize: 12 }}
           />
           <YAxis axisLine={true} tickLine={true} />
           <ChartTooltip content={<ChartTooltipContent />} />

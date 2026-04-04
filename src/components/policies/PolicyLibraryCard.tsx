@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -58,7 +57,7 @@ function PolicyLibraryCard({ initialRows = [] }: PolicyLibraryCardProps) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {rows.map((policy) => (
+                {initialRows.map((policy) => (
                   <TableRow key={policy.id}>
                     <TableCell className="font-medium text-slate-900">
                       {policy.id}
