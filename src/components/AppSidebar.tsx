@@ -54,97 +54,97 @@ export default function AppSidebar() {
       icon: GavelIcon,
       label: "Legal Governance",
       key: "legal-governance",
-      path: "/legal/legal-governance",
+      path: "/legal-governance",
     },
     {
       icon: FileTextIcon,
       label: "Policies & Documents",
       key: "policies-documents",
-      path: "/legal/policies-documents",
+      path: "/policies-documents",
     },
     {
       icon: Globe2Icon,
       label: "Regulatory Affairs",
       key: "regulatory-affairs",
-      path: "/legal/regulatory-affairs",
+      path: "/regulatory-affairs",
     },
     {
       icon: ClipboardCheckIcon,
       label: "Permits & Licensing",
       key: "permits-licensing",
-      path: "/legal/permits-licensing",
+      path: "/permits-licensing",
     },
     {
       icon: ShieldIcon,
       label: "Insurance",
       key: "insurance",
-      path: "/legal/insurance",
+      path: "/insurance",
     },
     {
       icon: CheckCircle2Icon,
       label: "Compliance",
       key: "compliance",
-      path: "/legal/compliance",
+      path: "/compliance",
     },
     {
       icon: CopyrightIcon,
       label: "IP & Copyright",
       key: "ip-copyright",
-      path: "/legal/ip-copyright",
+      path: "/ip-copyright",
     },
     {
       icon: UsersIcon,
       label: "Contracts",
       key: "contracts",
-      path: "/legal/contracts",
+      path: "/contracts",
     },
     {
       icon: ScaleIcon,
       label: "Disputes & Claims",
       key: "disputes-claims",
-      path: "/legal/disputes-claims",
+      path: "/disputes-claims",
     },
     {
       icon: UsersIcon,
       label: "Employment Legal",
       key: "employment-legal",
-      path: "/legal/employment-legal",
+      path: "/employment-legal",
     },
     {
       icon: ShieldCheckIcon,
       label: "Brand Protection",
       key: "brand-protection",
-      path: "/legal/brand-protection",
+      path: "/brand-protection",
     },
     {
       icon: LockIcon,
       label: "Privacy Legal",
       key: "privacy-legal",
-      path: "/legal/privacy-legal",
+      path: "/privacy-legal",
     },
     {
       icon: Building2Icon,
       label: "Corporate Governance",
       key: "corporate-governance",
-      path: "/legal/corporate-governance",
+      path: "/corporate-governance",
     },
     {
       icon: AlertTriangleIcon,
       label: "Litigation Risk",
       key: "litigation-risk",
-      path: "/legal/litigation-risk",
+      path: "/litigation-risk",
     },
     {
       icon: UsersIcon,
       label: "Human Resources",
       key: "human-resources",
-      path: "/legal/human-resources",
+      path: "/human-resources",
     },
     {
       icon: MessageCircleIcon,
       label: "Communication & Disclosures",
       key: "communication-disclosures",
-      path: "/legal/communication-disclosures",
+      path: "/communication-disclosures",
     },
   ];
 
@@ -158,7 +158,7 @@ export default function AppSidebar() {
             className="size-20 w-auto mb-2"
           />
           <div className="text-sidebar-foreground truncate font-poppins">
-            Allneeda Automation
+            Legal & Permit Directory
           </div>
         </div>
       </SidebarHeader>
