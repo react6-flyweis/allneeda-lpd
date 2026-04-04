@@ -5,6 +5,7 @@ import ChangePassword from "./pages/ChangePassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import DashboardLayout from "./components/DashboardLayout";
 import Dashboard from "./pages/dashboard/Dashboard";
+import LegalGovernance from "./pages/LegalGovernance";
 
 import NotFoundPage from "./pages/NotFound";
 
@@ -21,6 +22,7 @@ function App() {
         {/* Dashboard Routes */}
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/legal-governance" element={<LegalGovernance />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
