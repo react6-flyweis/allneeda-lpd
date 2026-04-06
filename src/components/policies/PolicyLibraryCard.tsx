@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
+import CreatePolicyDialog, {
+  type PolicyFormValues,
+} from "@/components/policies/CreatePolicyDialog";
+import EditPolicyDialog from "@/components/policies/EditPolicyDialog";
 import {
   Table,
   TableBody,
@@ -10,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 type PolicyRow = {
   id: string;
@@ -18,6 +22,7 @@ type PolicyRow = {
   jurisdiction: string;
   version: string;
   status: string;
+  description?: string;
 };
 
 type PolicyLibraryCardProps = {
@@ -30,6 +35,50 @@ const statusClasses: Record<string, string> = {
 };
 
 function PolicyLibraryCard({ initialRows = [] }: PolicyLibraryCardProps) {
+  const [rows, setRows] = useState<PolicyRow[]>(initialRows);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [selectedPolicy, setSelectedPolicy] = useState<PolicyRow | null>(null);
+
+  const onSubmit = (values: PolicyFormValues) => {
+    const newRow: PolicyRow = {
+      id: `POL-${String(rows.length + 1).padStart(3, "0")}`,
+      type: values.type,
+      audience: values.audience,
+      jurisdiction: values.jurisdiction,
+      version: "v1",
+      status: values.status,
+      description: values.description,
+    };
+
+    setRows((current) => [newRow, ...current]);
+    setIsDialogOpen(false);
+  };
+
+  const openEditDialog = (policy: PolicyRow) => {
+    setSelectedPolicy(policy);
+    setEditDialogOpen(true);
+  };
+
+  const handlePolicyUpdate = (id: string, values: PolicyFormValues) => {
+    setRows((current) =>
+      current.map((row) =>
+        row.id === id
+          ? {
+              ...row,
+              type: values.type,
+              audience: values.audience,
+              jurisdiction: values.jurisdiction,
+              status: values.status,
+              description: values.description,
+            }
+          : row,
+      ),
+    );
+    setEditDialogOpen(false);
+    setSelectedPolicy(null);
+  };
+
   return (
     <>
       <Card>
@@ -40,6 +89,11 @@ function PolicyLibraryCard({ initialRows = [] }: PolicyLibraryCardProps) {
               Platform policies and legal documents
             </p>
           </div>
+          <CreatePolicyDialog
+            isOpen={isDialogOpen}
+            onOpenChange={setIsDialogOpen}
+            onPolicyCreate={onSubmit}
+          />
         </CardHeader>
 
         <CardContent>
@@ -57,7 +111,7 @@ function PolicyLibraryCard({ initialRows = [] }: PolicyLibraryCardProps) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {initialRows.map((policy) => (
+                {rows.map((policy) => (
                   <TableRow key={policy.id}>
                     <TableCell className="font-medium text-slate-900">
                       {policy.id}
@@ -77,7 +131,11 @@ function PolicyLibraryCard({ initialRows = [] }: PolicyLibraryCardProps) {
                       </span>
                     </TableCell>
                     <TableCell className="flex flex-wrap gap-2">
-                      <Button variant="outline" size="sm">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => openEditDialog(policy)}
+                      >
                         Edit Draft
                       </Button>
                       <Button variant="outline" size="sm">
@@ -91,6 +149,18 @@ function PolicyLibraryCard({ initialRows = [] }: PolicyLibraryCardProps) {
           </div>
         </CardContent>
       </Card>
+
+      <EditPolicyDialog
+        isOpen={editDialogOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            setSelectedPolicy(null);
+          }
+          setEditDialogOpen(open);
+        }}
+        policy={selectedPolicy}
+        onPolicyUpdate={handlePolicyUpdate}
+      />
     </>
   );
 }
