@@ -7,6 +7,8 @@ import DashboardLayout from "./components/DashboardLayout";
 import Dashboard from "./pages/dashboard/Dashboard";
 import LegalGovernance from "./pages/LegalGovernance";
 import PoliciesDocuments from "./pages/PoliciesDocuments";
+import RegulatoryAffairs from "./pages/RegulatoryAffairs";
+import PermitsLicensing from "./pages/PermitsLicensing";
 
 import NotFoundPage from "./pages/NotFound";
 
@@ -25,6 +27,8 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/legal-governance" element={<LegalGovernance />} />
           <Route path="/policies-documents" element={<PoliciesDocuments />} />
+          <Route path="/regulatory-affairs" element={<RegulatoryAffairs />} />
+          <Route path="/permits-licensing" element={<PermitsLicensing />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
