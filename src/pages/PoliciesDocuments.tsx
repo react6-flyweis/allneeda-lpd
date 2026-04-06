@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   CheckCircle2,
   FileText,
@@ -17,7 +18,9 @@ import {
 } from "@/components/ui/table";
 import PolicyAcceptanceTrendChart from "@/components/policies/PolicyAcceptanceTrendChart";
 import PoliciesByTypeChart from "@/components/policies/PoliciesByTypeChart";
+import PolicyAcceptanceReportDialog from "@/components/policies/PolicyAcceptanceReportDialog";
 import PolicyLibraryCard from "@/components/policies/PolicyLibraryCard";
+import VersionComparisonDialog from "@/components/policies/VersionComparisonDialog";
 import PageHeader from "@/components/PageHeader";
 import GlobalFilters from "@/components/dashboard/GlobalFilters";
 
@@ -45,6 +48,7 @@ type PolicyVersionRow = {
   version: string;
   changeSummary: string;
   effectiveDate: string;
+  publishedDate: string;
   daysUntilEffective: string;
   status: string;
 };
@@ -118,6 +122,7 @@ const policyVersionRows: PolicyVersionRow[] = [
     version: "v3",
     changeSummary: "Updated data retention periods per GDPR requirements",
     effectiveDate: "1/23/2026",
+    publishedDate: "1/15/2026",
     daysUntilEffective: "6d",
     status: "Published",
   },
@@ -127,12 +132,38 @@ const policyVersionRows: PolicyVersionRow[] = [
     version: "v5",
     changeSummary: "Added dispute resolution procedures",
     effectiveDate: "12/17/2025",
+    publishedDate: "12/10/2025",
     daysUntilEffective: "",
     status: "Published",
   },
 ];
 
 function PoliciesDocuments() {
+  const [reportDialogOpen, setReportDialogOpen] = useState(false);
+  const [versionDialogOpen, setVersionDialogOpen] = useState(false);
+  const [selectedVersion, setSelectedVersion] =
+    useState<PolicyVersionRow | null>(null);
+
+  const openVersionComparison = (version: PolicyVersionRow) => {
+    setSelectedVersion(version);
+    setVersionDialogOpen(true);
+  };
+
+  const previousVersion = selectedVersion
+    ? {
+        id: `VER-${String(Math.max(Number(selectedVersion.id.split("-")[1] ?? "0") - 1, 0)).padStart(3, "0")}`,
+        policy: selectedVersion.policy,
+        version: selectedVersion.version.startsWith("v")
+          ? `v${Math.max(Number(selectedVersion.version.slice(1)) - 1, 1)}`
+          : "v2",
+        changeSummary: "Previous version with the last approved revisions.",
+        effectiveDate: "10/26/2025",
+        publishedDate: "10/16/2025",
+        daysUntilEffective: "",
+        status: "Published",
+      }
+    : null;
+
   return (
     <div className="space-y-6">
       <section>
@@ -184,7 +215,11 @@ function PoliciesDocuments() {
               Version history and change tracking
             </p>
           </div>
-          <Button variant="outline" size="sm">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setReportDialogOpen(true)}
+          >
             <FileText className="h-4 w-4" />
             Generate Acceptance Report
           </Button>
@@ -221,7 +256,11 @@ function PoliciesDocuments() {
                     </span>
                   </TableCell>
                   <TableCell>
-                    <Button variant="outline" size="sm">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => openVersionComparison(version)}
+                    >
                       View Diff
                     </Button>
                   </TableCell>
@@ -259,6 +298,22 @@ function PoliciesDocuments() {
           </ul>
         </CardContent>
       </Card>
+
+      <PolicyAcceptanceReportDialog
+        open={reportDialogOpen}
+        onOpenChange={setReportDialogOpen}
+      />
+      <VersionComparisonDialog
+        open={versionDialogOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            setSelectedVersion(null);
+          }
+          setVersionDialogOpen(open);
+        }}
+        currentVersion={selectedVersion}
+        previousVersion={previousVersion}
+      />
 
       <section className="grid gap-4 xl:grid-cols-2">
         <Card>

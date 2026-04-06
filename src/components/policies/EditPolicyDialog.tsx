@@ -33,9 +33,10 @@ const policyFormSchema = z.object({
 
 export type PolicyFormValues = z.infer<typeof policyFormSchema>;
 
-export type PolicyRow = PolicyFormValues & {
+export type PolicyRow = Omit<PolicyFormValues, "description"> & {
   id: string;
   version: string;
+  description?: string;
 };
 
 const policyTypeOptions = [
