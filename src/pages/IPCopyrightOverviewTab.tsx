@@ -34,6 +34,7 @@ import {
 } from "recharts";
 import { cn } from "@/lib/utils";
 import CreateIPCaseDialog from "@/components/ip-copyright/CreateIPCaseDialog";
+import ValidateIPCaseDialog from "@/components/ip-copyright/ValidateIPCaseDialog";
 
 type SummaryStat = {
   title: string;
@@ -50,6 +51,8 @@ type CaseRow = {
   complainant: string;
   status: string;
   created: string;
+  uploaderId: string;
+  submitted: string;
 };
 
 const overviewStats: SummaryStat[] = [
@@ -91,6 +94,8 @@ const caseRows: CaseRow[] = [
     complainant: "PhotoStock Inc",
     status: "approved",
     created: "1/11/2026",
+    uploaderId: "USER-4567",
+    submitted: "1/14/2026",
   },
   {
     id: "IP-002",
@@ -99,6 +104,8 @@ const caseRows: CaseRow[] = [
     complainant: "Nike Inc",
     status: "validating",
     created: "1/15/2026",
+    uploaderId: "BRAND-7821",
+    submitted: "1/15/2026",
   },
   {
     id: "IP-003",
@@ -107,6 +114,8 @@ const caseRows: CaseRow[] = [
     complainant: "Music Rights Org",
     status: "counter notice",
     created: "1/2/2026",
+    uploaderId: "CREATOR-9988",
+    submitted: "1/2/2026",
   },
 ];
 
@@ -159,6 +168,14 @@ const casesByTypeData = [
 
 function IPCopyrightOverviewTab() {
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [validateDialogOpen, setValidateDialogOpen] = useState(false);
+  const [selectedCaseForValidation, setSelectedCaseForValidation] =
+    useState<CaseRow | null>(null);
+
+  function handleOpenValidationDialog(row: CaseRow) {
+    setSelectedCaseForValidation(row);
+    setValidateDialogOpen(true);
+  }
 
   return (
     <TabsContent value="overview" className="space-y-6">
@@ -232,7 +249,11 @@ function IPCopyrightOverviewTab() {
                   </TableCell>
                   <TableCell>{row.created}</TableCell>
                   <TableCell className="space-x-2">
-                    <Button variant="outline" size="sm">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleOpenValidationDialog(row)}
+                    >
                       Validate
                     </Button>
                     <Button size="sm" variant="outline">
@@ -385,6 +406,11 @@ function IPCopyrightOverviewTab() {
       <CreateIPCaseDialog
         open={createDialogOpen}
         onOpenChange={setCreateDialogOpen}
+      />
+      <ValidateIPCaseDialog
+        open={validateDialogOpen}
+        onOpenChange={setValidateDialogOpen}
+        caseContext={selectedCaseForValidation}
       />
     </TabsContent>
   );
