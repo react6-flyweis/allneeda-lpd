@@ -1,0 +1,84 @@
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import GlobalFilters from "@/components/dashboard/GlobalFilters";
+import PageHeader from "@/components/PageHeader";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import IPCopyrightOverviewTab from "./IPCopyrightOverviewTab";
+
+const tabLabels = [
+  "Overview",
+  "DMCA",
+  "Counter Notice",
+  "Repeat Infringer",
+  "Detection",
+  "Watermark",
+  "Rights-Holder",
+  "Education",
+  "AI/Synthetic",
+  "Trademark",
+  "Audit & Vault",
+];
+
+function IPCopyright() {
+  return (
+    <div className="space-y-6">
+      <section>
+        <PageHeader
+          title="IP & Copyright"
+          subtitle="Here’s what’s happening with your marketing campaigns today."
+        />
+      </section>
+
+      <GlobalFilters />
+
+      <Tabs defaultValue="overview" className="">
+        <TabsList className="overflow-x-auto rounded-full bg-white p-1">
+          {tabLabels.map((label) => {
+            const value = label.toLowerCase().replace(/\s+/g, "-");
+            return (
+              <TabsTrigger
+                key={label}
+                value={value}
+                className="min-w-35 rounded-full data-[state=active]:bg-slate-900 data-[state=active]:text-white"
+              >
+                {label}
+              </TabsTrigger>
+            );
+          })}
+        </TabsList>
+
+        <IPCopyrightOverviewTab />
+
+        {tabLabels.slice(1).map((label) => {
+          const value = label.toLowerCase().replace(/\s+/g, "-");
+          return (
+            <TabsContent key={label} value={value} className="space-y-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle>{label}</CardTitle>
+                </CardHeader>
+                <CardContent className="text-sm text-slate-600">
+                  <div className="space-y-3">
+                    <p>
+                      This section is reserved for {label} details and workflow.
+                    </p>
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <p className="text-sm text-slate-500">
+                          Placeholder content for the {label} tab.
+                        </p>
+                      </div>
+                      <Button variant="secondary">View {label}</Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          );
+        })}
+      </Tabs>
+    </div>
+  );
+}
+
+export default IPCopyright;
