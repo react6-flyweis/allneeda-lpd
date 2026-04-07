@@ -9,6 +9,9 @@ import LegalGovernance from "./pages/LegalGovernance";
 import PoliciesDocuments from "./pages/PoliciesDocuments";
 import RegulatoryAffairs from "./pages/RegulatoryAffairs";
 import PermitsLicensing from "./pages/PermitsLicensing";
+import Insurance from "./pages/Insurance";
+import IPCopyright from "./pages/IPCopyright";
+import Compliance from "./pages/Compliance";
 
 import NotFoundPage from "./pages/NotFound";
 
@@ -29,6 +32,9 @@ function App() {
           <Route path="/policies-documents" element={<PoliciesDocuments />} />
           <Route path="/regulatory-affairs" element={<RegulatoryAffairs />} />
           <Route path="/permits-licensing" element={<PermitsLicensing />} />
+          <Route path="/insurance" element={<Insurance />} />
+          <Route path="/ip-copyright" element={<IPCopyright />} />
+          <Route path="/compliance" element={<Compliance />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
