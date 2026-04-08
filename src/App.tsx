@@ -12,6 +12,9 @@ import PermitsLicensing from "./pages/PermitsLicensing";
 import Insurance from "./pages/Insurance";
 import IPCopyright from "./pages/IPCopyright";
 import Compliance from "./pages/Compliance";
+import Contracts from "./pages/Contracts";
+import DisputesClaims from "./pages/DisputesClaims";
+import EmploymentLegal from "./pages/EmploymentLegal";
 
 import NotFoundPage from "./pages/NotFound";
 
@@ -35,6 +38,9 @@ function App() {
           <Route path="/insurance" element={<Insurance />} />
           <Route path="/ip-copyright" element={<IPCopyright />} />
           <Route path="/compliance" element={<Compliance />} />
+          <Route path="/contracts" element={<Contracts />} />
+          <Route path="/disputes-claims" element={<DisputesClaims />} />
+          <Route path="/employment-legal" element={<EmploymentLegal />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
