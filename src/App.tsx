@@ -15,6 +15,11 @@ import Compliance from "./pages/Compliance";
 import Contracts from "./pages/Contracts";
 import DisputesClaims from "./pages/DisputesClaims";
 import EmploymentLegal from "./pages/EmploymentLegal";
+import BrandProtection from "./pages/BrandProtection";
+import CorporateGovernance from "./pages/CorporateGovernance";
+import LitigationRisk from "./pages/LitigationRisk";
+import PrivacyLegal from "./pages/PrivacyLegal";
+import HumanResources from "./pages/HumanResources";
 
 import NotFoundPage from "./pages/NotFound";
 
@@ -41,6 +46,14 @@ function App() {
           <Route path="/contracts" element={<Contracts />} />
           <Route path="/disputes-claims" element={<DisputesClaims />} />
           <Route path="/employment-legal" element={<EmploymentLegal />} />
+          <Route path="/brand-protection" element={<BrandProtection />} />
+          <Route
+            path="/corporate-governance"
+            element={<CorporateGovernance />}
+          />
+          <Route path="/litigation-risk" element={<LitigationRisk />} />
+          <Route path="/human-resources" element={<HumanResources />} />
+          <Route path="/privacy-legal" element={<PrivacyLegal />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
