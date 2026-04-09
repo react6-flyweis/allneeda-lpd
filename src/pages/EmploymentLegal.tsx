@@ -18,6 +18,9 @@ import {
 } from "@/components/ui/table";
 import EmploymentCasesByTypeChart from "@/components/employment/EmploymentCasesByTypeChart";
 import EmploymentResolutionTimeChart from "@/components/employment/EmploymentResolutionTimeChart";
+import ReviewEmploymentTemplateDialog, {
+  type EmploymentTemplateReviewItem,
+} from "@/components/employment/ReviewEmploymentTemplateDialog";
 import PageHeader from "@/components/PageHeader";
 import GlobalFilters from "@/components/dashboard/GlobalFilters";
 import EmploymentTemplateDialog from "@/components/EmploymentTemplateDialog";
@@ -143,6 +146,14 @@ const initialTemplateRows: TemplateRow[] = [
 function EmploymentLegal() {
   const [templateRows] = useState<TemplateRow[]>(initialTemplateRows);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] =
+    useState<EmploymentTemplateReviewItem | null>(null);
+
+  function openReviewDialog(template: TemplateRow) {
+    setSelectedTemplate(template);
+    setIsReviewDialogOpen(true);
+  }
 
   return (
     <div className="space-y-6">
@@ -243,7 +254,11 @@ function EmploymentLegal() {
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      <Button variant="outline" size="sm">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => openReviewDialog(row)}
+                      >
                         Review
                       </Button>
                     </TableCell>
@@ -288,6 +303,12 @@ function EmploymentLegal() {
       <EmploymentTemplateDialog
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
+      />
+
+      <ReviewEmploymentTemplateDialog
+        open={isReviewDialogOpen}
+        onOpenChange={setIsReviewDialogOpen}
+        template={selectedTemplate}
       />
     </div>
   );
