@@ -20,6 +20,7 @@ import CorporateGovernance from "./pages/CorporateGovernance";
 import LitigationRisk from "./pages/LitigationRisk";
 import PrivacyLegal from "./pages/PrivacyLegal";
 import HumanResources from "./pages/HumanResources";
+import CommunicationDisclosures from "./pages/CommunicationDisclosures";
 
 import NotFoundPage from "./pages/NotFound";
 
@@ -53,6 +54,10 @@ function App() {
           />
           <Route path="/litigation-risk" element={<LitigationRisk />} />
           <Route path="/human-resources" element={<HumanResources />} />
+          <Route
+            path="/communication-disclosures"
+            element={<CommunicationDisclosures />}
+          />
           <Route path="/privacy-legal" element={<PrivacyLegal />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
