@@ -3,12 +3,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import GlobalFilters from "@/components/dashboard/GlobalFilters";
 import PageHeader from "@/components/PageHeader";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import IPCopyrightCounterNoticeTab from "./IPCopyrightCounterNoticeTab";
+import IPCopyrightDetectionTab from "./IPCopyrightDetectionTab";
+import IPCopyrightDmcaTab from "./IPCopyrightDmcaTab";
 import IPCopyrightOverviewTab from "./IPCopyrightOverviewTab";
+import IPCopyrightRepeatInfringerTab from "./IPCopyrightRepeatInfringerTab";
+import IPCopyrightWatermarkTab from "./IPCopyrightWatermarkTab";
 
 const tabLabels = [
   "Overview",
   "DMCA",
-  "Counter Notice",
+  "Counter-Notice",
   "Repeat Infringer",
   "Detection",
   "Watermark",
@@ -48,8 +53,13 @@ function IPCopyright() {
         </TabsList>
 
         <IPCopyrightOverviewTab />
+        <IPCopyrightDmcaTab />
+        <IPCopyrightCounterNoticeTab />
+        <IPCopyrightRepeatInfringerTab />
+        <IPCopyrightDetectionTab />
+        <IPCopyrightWatermarkTab />
 
-        {tabLabels.slice(1).map((label) => {
+        {tabLabels.slice(6).map((label) => {
           const value = label.toLowerCase().replace(/\s+/g, "-");
           return (
             <TabsContent key={label} value={value} className="space-y-4">
