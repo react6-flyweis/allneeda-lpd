@@ -1,5 +1,10 @@
 import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import {
+  Controller,
+  type Control,
+  type FieldPathByValue,
+  useForm,
+} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Fingerprint } from "lucide-react";
@@ -13,7 +18,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Field, FieldContent, FieldError, FieldLabel } from "@/components/ui/field";
+import {
+  Field,
+  FieldContent,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -24,10 +34,27 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-const watermarkPositionOptions = ["Bottom Right", "Bottom Left", "Top Right", "Top Left"];
-const penaltyRemovalOptions = ["Strike + Suspension", "Warning Only", "Immediate Takedown"];
-const attributionFormatOptions = ["Creator Name + Source Link", "Creator Name Only", "Source Link Only"];
-const attributionPlacementOptions = ["Description Field", "Caption", "Overlay Footer"];
+const watermarkPositionOptions = [
+  "Bottom Right",
+  "Bottom Left",
+  "Top Right",
+  "Top Left",
+];
+const penaltyRemovalOptions = [
+  "Strike + Suspension",
+  "Warning Only",
+  "Immediate Takedown",
+];
+const attributionFormatOptions = [
+  "Creator Name + Source Link",
+  "Creator Name Only",
+  "Source Link Only",
+];
+const attributionPlacementOptions = [
+  "Description Field",
+  "Caption",
+  "Overlay Footer",
+];
 const violationActionOptions = ["Warning", "Strike", "Suspension"];
 
 const configureWatermarkRulesSchema = z.object({
@@ -71,7 +98,9 @@ const configureWatermarkRulesSchema = z.object({
   policyNotes: z.string().optional(),
 });
 
-type ConfigureWatermarkRulesValues = z.infer<typeof configureWatermarkRulesSchema>;
+type ConfigureWatermarkRulesValues = z.infer<
+  typeof configureWatermarkRulesSchema
+>;
 
 type ConfigureWatermarkRulesDialogProps = {
   open: boolean;
@@ -85,8 +114,8 @@ function BooleanField({
   label,
   description,
 }: {
-  name: keyof ConfigureWatermarkRulesValues;
-  control: Parameters<typeof Controller>[0]["control"];
+  name: FieldPathByValue<ConfigureWatermarkRulesValues, boolean>;
+  control: Control<ConfigureWatermarkRulesValues>;
   label: string;
   description?: string;
 }) {
@@ -107,7 +136,9 @@ function BooleanField({
           />
           <div>
             <p>{label}</p>
-            {description ? <p className="text-sm text-muted-foreground">{description}</p> : null}
+            {description ? (
+              <p className="text-sm text-muted-foreground">{description}</p>
+            ) : null}
           </div>
         </div>
       </FieldContent>
@@ -183,13 +214,16 @@ function ConfigureWatermarkRulesDialog({
             Configure Watermark & Attribution Rules
           </DialogTitle>
           <DialogDescription>
-            Set mandatory requirements, detection thresholds, and enforcement policies
+            Set mandatory requirements, detection thresholds, and enforcement
+            policies
           </DialogDescription>
         </DialogHeader>
 
         <form className="space-y-5 py-4" onSubmit={handleSubmit(onSubmit)}>
           <section className="rounded-xl border border-blue-200 bg-blue-50 p-4 space-y-4">
-            <h3 className="font-semibold text-blue-900">Watermark Requirements</h3>
+            <h3 className="font-semibold text-blue-900">
+              Watermark Requirements
+            </h3>
 
             <BooleanField
               name="watermarkRequired"
@@ -199,14 +233,19 @@ function ConfigureWatermarkRulesDialog({
             />
 
             <Field className="gap-1">
-              <FieldLabel htmlFor="preferredWatermarkPosition">Preferred Watermark Position</FieldLabel>
+              <FieldLabel htmlFor="preferredWatermarkPosition">
+                Preferred Watermark Position
+              </FieldLabel>
               <FieldContent>
                 <Controller
                   control={control}
                   name="preferredWatermarkPosition"
                   render={({ field }) => (
                     <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger id="preferredWatermarkPosition" className="w-full bg-gray-50">
+                      <SelectTrigger
+                        id="preferredWatermarkPosition"
+                        className="w-full bg-gray-50"
+                      >
                         <SelectValue placeholder="Select position" />
                       </SelectTrigger>
                       <SelectContent>
@@ -225,31 +264,48 @@ function ConfigureWatermarkRulesDialog({
 
             <div className="grid gap-4 sm:grid-cols-2">
               <Field className="gap-1">
-                <FieldLabel htmlFor="minimumSizePercent">Minimum Size (% of content)</FieldLabel>
+                <FieldLabel htmlFor="minimumSizePercent">
+                  Minimum Size (% of content)
+                </FieldLabel>
                 <FieldContent>
-                  <Input id="minimumSizePercent" className="bg-gray-50" {...register("minimumSizePercent")} />
+                  <Input
+                    id="minimumSizePercent"
+                    className="bg-gray-50"
+                    {...register("minimumSizePercent")}
+                  />
                   <FieldError errors={[errors.minimumSizePercent]} />
                 </FieldContent>
               </Field>
 
               <Field className="gap-1">
-                <FieldLabel htmlFor="minimumOpacityPercent">Minimum Opacity (%)</FieldLabel>
+                <FieldLabel htmlFor="minimumOpacityPercent">
+                  Minimum Opacity (%)
+                </FieldLabel>
                 <FieldContent>
-                  <Input id="minimumOpacityPercent" className="bg-gray-50" {...register("minimumOpacityPercent")} />
+                  <Input
+                    id="minimumOpacityPercent"
+                    className="bg-gray-50"
+                    {...register("minimumOpacityPercent")}
+                  />
                   <FieldError errors={[errors.minimumOpacityPercent]} />
                 </FieldContent>
               </Field>
             </div>
 
             <Field className="gap-1">
-              <FieldLabel htmlFor="penaltyForWatermarkRemoval">Penalty for Watermark Removal</FieldLabel>
+              <FieldLabel htmlFor="penaltyForWatermarkRemoval">
+                Penalty for Watermark Removal
+              </FieldLabel>
               <FieldContent>
                 <Controller
                   control={control}
                   name="penaltyForWatermarkRemoval"
                   render={({ field }) => (
                     <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger id="penaltyForWatermarkRemoval" className="w-full bg-gray-50">
+                      <SelectTrigger
+                        id="penaltyForWatermarkRemoval"
+                        className="w-full bg-gray-50"
+                      >
                         <SelectValue placeholder="Select penalty" />
                       </SelectTrigger>
                       <SelectContent>
@@ -268,7 +324,9 @@ function ConfigureWatermarkRulesDialog({
           </section>
 
           <section className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 space-y-4">
-            <h3 className="font-semibold text-emerald-900">Attribution Requirements</h3>
+            <h3 className="font-semibold text-emerald-900">
+              Attribution Requirements
+            </h3>
 
             <BooleanField
               name="attributionRequired"
@@ -278,14 +336,19 @@ function ConfigureWatermarkRulesDialog({
             />
 
             <Field className="gap-1">
-              <FieldLabel htmlFor="attributionFormat">Attribution Format</FieldLabel>
+              <FieldLabel htmlFor="attributionFormat">
+                Attribution Format
+              </FieldLabel>
               <FieldContent>
                 <Controller
                   control={control}
                   name="attributionFormat"
                   render={({ field }) => (
                     <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger id="attributionFormat" className="w-full bg-gray-50">
+                      <SelectTrigger
+                        id="attributionFormat"
+                        className="w-full bg-gray-50"
+                      >
                         <SelectValue placeholder="Select format" />
                       </SelectTrigger>
                       <SelectContent>
@@ -303,14 +366,19 @@ function ConfigureWatermarkRulesDialog({
             </Field>
 
             <Field className="gap-1">
-              <FieldLabel htmlFor="attributionPlacement">Attribution Placement</FieldLabel>
+              <FieldLabel htmlFor="attributionPlacement">
+                Attribution Placement
+              </FieldLabel>
               <FieldContent>
                 <Controller
                   control={control}
                   name="attributionPlacement"
                   render={({ field }) => (
                     <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger id="attributionPlacement" className="w-full bg-gray-50">
+                      <SelectTrigger
+                        id="attributionPlacement"
+                        className="w-full bg-gray-50"
+                      >
                         <SelectValue placeholder="Select placement" />
                       </SelectTrigger>
                       <SelectContent>
@@ -328,14 +396,19 @@ function ConfigureWatermarkRulesDialog({
             </Field>
 
             <Field className="gap-1">
-              <FieldLabel htmlFor="penaltyForMissingAttribution">Penalty for Missing Attribution</FieldLabel>
+              <FieldLabel htmlFor="penaltyForMissingAttribution">
+                Penalty for Missing Attribution
+              </FieldLabel>
               <FieldContent>
                 <Controller
                   control={control}
                   name="penaltyForMissingAttribution"
                   render={({ field }) => (
                     <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger id="penaltyForMissingAttribution" className="w-full bg-gray-50">
+                      <SelectTrigger
+                        id="penaltyForMissingAttribution"
+                        className="w-full bg-gray-50"
+                      >
                         <SelectValue placeholder="Select penalty" />
                       </SelectTrigger>
                       <SelectContent>
@@ -366,10 +439,18 @@ function ConfigureWatermarkRulesDialog({
               label="Auto-detect watermark obscuring/tampering"
             />
             <Field className="gap-1 max-w-sm">
-              <FieldLabel htmlFor="detectionConfidenceThreshold">Detection Confidence Threshold (%)</FieldLabel>
+              <FieldLabel htmlFor="detectionConfidenceThreshold">
+                Detection Confidence Threshold (%)
+              </FieldLabel>
               <FieldContent>
-                <Input id="detectionConfidenceThreshold" className="bg-gray-50" {...register("detectionConfidenceThreshold")} />
-                <p className="text-sm text-muted-foreground">Minimum confidence to trigger violation (70-99%)</p>
+                <Input
+                  id="detectionConfidenceThreshold"
+                  className="bg-gray-50"
+                  {...register("detectionConfidenceThreshold")}
+                />
+                <p className="text-sm text-muted-foreground">
+                  Minimum confidence to trigger violation (70-99%)
+                </p>
                 <FieldError errors={[errors.detectionConfidenceThreshold]} />
               </FieldContent>
             </Field>
@@ -388,10 +469,18 @@ function ConfigureWatermarkRulesDialog({
               label="Auto-enforce penalties upon detection"
             />
             <Field className="gap-1 max-w-sm">
-              <FieldLabel htmlFor="gracePeriodHours">Grace Period (Hours)</FieldLabel>
+              <FieldLabel htmlFor="gracePeriodHours">
+                Grace Period (Hours)
+              </FieldLabel>
               <FieldContent>
-                <Input id="gracePeriodHours" className="bg-gray-50" {...register("gracePeriodHours")} />
-                <p className="text-sm text-muted-foreground">Time to fix violation before enforcement</p>
+                <Input
+                  id="gracePeriodHours"
+                  className="bg-gray-50"
+                  {...register("gracePeriodHours")}
+                />
+                <p className="text-sm text-muted-foreground">
+                  Time to fix violation before enforcement
+                </p>
                 <FieldError errors={[errors.gracePeriodHours]} />
               </FieldContent>
             </Field>
@@ -410,14 +499,19 @@ function ConfigureWatermarkRulesDialog({
           <section className="border-t pt-4 space-y-3">
             <h3 className="font-semibold">Penalty Escalation</h3>
             <Field className="gap-1">
-              <FieldLabel htmlFor="firstViolationAction">First Violation Action</FieldLabel>
+              <FieldLabel htmlFor="firstViolationAction">
+                First Violation Action
+              </FieldLabel>
               <FieldContent>
                 <Controller
                   control={control}
                   name="firstViolationAction"
                   render={({ field }) => (
                     <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger id="firstViolationAction" className="w-full bg-gray-50">
+                      <SelectTrigger
+                        id="firstViolationAction"
+                        className="w-full bg-gray-50"
+                      >
                         <SelectValue placeholder="Select action" />
                       </SelectTrigger>
                       <SelectContent>
@@ -433,14 +527,19 @@ function ConfigureWatermarkRulesDialog({
               </FieldContent>
             </Field>
             <Field className="gap-1">
-              <FieldLabel htmlFor="secondViolationAction">Second Violation Action</FieldLabel>
+              <FieldLabel htmlFor="secondViolationAction">
+                Second Violation Action
+              </FieldLabel>
               <FieldContent>
                 <Controller
                   control={control}
                   name="secondViolationAction"
                   render={({ field }) => (
                     <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger id="secondViolationAction" className="w-full bg-gray-50">
+                      <SelectTrigger
+                        id="secondViolationAction"
+                        className="w-full bg-gray-50"
+                      >
                         <SelectValue placeholder="Select action" />
                       </SelectTrigger>
                       <SelectContent>
@@ -456,14 +555,19 @@ function ConfigureWatermarkRulesDialog({
               </FieldContent>
             </Field>
             <Field className="gap-1">
-              <FieldLabel htmlFor="thirdViolationAction">Third Violation Action</FieldLabel>
+              <FieldLabel htmlFor="thirdViolationAction">
+                Third Violation Action
+              </FieldLabel>
               <FieldContent>
                 <Controller
                   control={control}
                   name="thirdViolationAction"
                   render={({ field }) => (
                     <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger id="thirdViolationAction" className="w-full bg-gray-50">
+                      <SelectTrigger
+                        id="thirdViolationAction"
+                        className="w-full bg-gray-50"
+                      >
                         <SelectValue placeholder="Select action" />
                       </SelectTrigger>
                       <SelectContent>
@@ -479,9 +583,15 @@ function ConfigureWatermarkRulesDialog({
               </FieldContent>
             </Field>
             <Field className="gap-1 max-w-sm">
-              <FieldLabel htmlFor="suspensionDurationDays">Suspension Duration (Days)</FieldLabel>
+              <FieldLabel htmlFor="suspensionDurationDays">
+                Suspension Duration (Days)
+              </FieldLabel>
               <FieldContent>
-                <Input id="suspensionDurationDays" className="bg-gray-50" {...register("suspensionDurationDays")} />
+                <Input
+                  id="suspensionDurationDays"
+                  className="bg-gray-50"
+                  {...register("suspensionDurationDays")}
+                />
                 <FieldError errors={[errors.suspensionDurationDays]} />
               </FieldContent>
             </Field>
@@ -500,9 +610,15 @@ function ConfigureWatermarkRulesDialog({
               label="Allow users to appeal violations"
             />
             <Field className="gap-1 max-w-sm">
-              <FieldLabel htmlFor="appealWindowDays">Appeal Window (Days)</FieldLabel>
+              <FieldLabel htmlFor="appealWindowDays">
+                Appeal Window (Days)
+              </FieldLabel>
               <FieldContent>
-                <Input id="appealWindowDays" className="bg-gray-50" {...register("appealWindowDays")} />
+                <Input
+                  id="appealWindowDays"
+                  className="bg-gray-50"
+                  {...register("appealWindowDays")}
+                />
                 <FieldError errors={[errors.appealWindowDays]} />
               </FieldContent>
             </Field>
@@ -559,7 +675,11 @@ function ConfigureWatermarkRulesDialog({
           </section>
 
           <DialogFooter className="pt-4 justify-end gap-3 sm:flex-row">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+            >
               Cancel
             </Button>
             <Button type="submit">Save Rules Configuration</Button>
