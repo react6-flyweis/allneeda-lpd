@@ -13,6 +13,7 @@ import {
 import DiscussionCard, {
   type DiscussionItem,
 } from "@/components/communication/DiscussionCard";
+import ChatDialog from "@/components/chat/ChatDialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -174,10 +175,12 @@ export default function CommunicationDisclosures() {
         </div>
 
         <div className="flex gap-2">
-          <Button className="h-9 rounded-md bg-[#0e1e38] px-3 text-sm text-white hover:bg-[#0e1e38]/90">
-            <MessageCircleMore className="h-4 w-4" />
-            Chat/Meeting
-          </Button>
+          <ChatDialog>
+            <Button className="h-9 rounded-md bg-[#0e1e38] px-3 text-sm text-white hover:bg-[#0e1e38]/90">
+              <MessageCircleMore className="h-4 w-4" />
+              Chat/Meeting
+            </Button>
+          </ChatDialog>
           <Button className="h-9 rounded-md bg-[#0e1e38] px-3 text-sm text-white hover:bg-[#0e1e38]/90">
             <Plus className="h-4 w-4" />
             New Discussion
