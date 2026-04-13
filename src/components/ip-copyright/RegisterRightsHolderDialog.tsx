@@ -92,9 +92,9 @@ const registerRightsHolderSchema = z.object({
   counterNoticeResponseEmail: z.string().optional(),
   legalEscalationContact: z.string().optional(),
 
-  termsAccepted: z.literal(true, {
-    error: "You must accept the rights-holder terms to continue",
-  }),
+  termsAccepted: z.boolean(
+    "You must accept the rights-holder terms to continue",
+  ),
   signedAgreementUploaded: z.boolean(),
   agreementDate: z.string().optional(),
   agreementRenewalDate: z.string().optional(),
