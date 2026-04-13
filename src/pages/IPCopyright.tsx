@@ -3,11 +3,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import GlobalFilters from "@/components/dashboard/GlobalFilters";
 import PageHeader from "@/components/PageHeader";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import IPCopyrightAISyntheticTab from "./IPCopyrightAISyntheticTab";
+import IPCopyrightAuditVaultTab from "./IPCopyrightAuditVaultTab";
 import IPCopyrightCounterNoticeTab from "./IPCopyrightCounterNoticeTab";
 import IPCopyrightDetectionTab from "./IPCopyrightDetectionTab";
 import IPCopyrightDmcaTab from "./IPCopyrightDmcaTab";
+import IPCopyrightEducationTab from "./IPCopyrightEducationTab";
 import IPCopyrightOverviewTab from "./IPCopyrightOverviewTab";
 import IPCopyrightRepeatInfringerTab from "./IPCopyrightRepeatInfringerTab";
+import IPCopyrightRightsHolderTab from "./IPCopyrightRightsHolderTab";
+import IPCopyrightTrademarkTab from "./IPCopyrightTrademarkTab";
 import IPCopyrightWatermarkTab from "./IPCopyrightWatermarkTab";
 
 const tabLabels = [
@@ -37,14 +42,14 @@ function IPCopyright() {
       <GlobalFilters />
 
       <Tabs defaultValue="overview" className="">
-        <TabsList className="overflow-x-auto rounded-full bg-white p-1">
+        <TabsList className="w-full justify-start overflow-x-auto overflow-y-hidden rounded-full bg-white p-1 whitespace-nowrap">
           {tabLabels.map((label) => {
             const value = label.toLowerCase().replace(/\s+/g, "-");
             return (
               <TabsTrigger
                 key={label}
                 value={value}
-                className="min-w-35 rounded-full data-[state=active]:bg-slate-900 data-[state=active]:text-white"
+                className="flex-none! min-w-35 rounded-full data-[state=active]:bg-slate-900 data-[state=active]:text-white"
               >
                 {label}
               </TabsTrigger>
@@ -58,8 +63,13 @@ function IPCopyright() {
         <IPCopyrightRepeatInfringerTab />
         <IPCopyrightDetectionTab />
         <IPCopyrightWatermarkTab />
+        <IPCopyrightRightsHolderTab />
+        <IPCopyrightEducationTab />
+        <IPCopyrightAISyntheticTab />
+        <IPCopyrightTrademarkTab />
+        <IPCopyrightAuditVaultTab />
 
-        {tabLabels.slice(6).map((label) => {
+        {tabLabels.slice(11).map((label) => {
           const value = label.toLowerCase().replace(/\s+/g, "-");
           return (
             <TabsContent key={label} value={value} className="space-y-4">
